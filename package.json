@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "antd": "3.16.1",
+    "axios": "0.16.1",
     "node-sass": "^4.11.0",
+    "qs": "^6.8.0",
+    "query-string": "^6.8.3",
     "react": "16.8.0",
     "react-dom": "16.8.0",
     "react-redux": "6.0.1",
@@ -13,8 +16,8 @@
     "react-scripts": "2.1.8",
     "redux": "4.0.1",
     "redux-actions": "^2.6.5",
-    "redux-observable": "1.0.0",
-    "rxjs": "6.4.0",
+    "redux-observable": "^0.17.0",
+    "rxjs": "^5.5.6",
     "rxjs-compat": "^6.3.3"
   },
   "devDependencies": {
@@ -23,7 +26,7 @@
   },
   "scripts": {
     "start": "concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
-    "start-backend": "nodemon server/server.js",
+    "start-backend": "nodemon server/index.js",
     "start-frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

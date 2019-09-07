@@ -1,0 +1,12 @@
+.login-section {
+  display: flex;
+  justify-content: center;
+  input {
+    display: block
+  }
+  .login-button,
+  .register-button{
+    display: block;
+    width: 100%
+  }
+}

@@ -1,16 +1,35 @@
-const express = require('express');
-const path = require('path');
-const port = process.env.PORT || 5000;
+import express from 'express';
+import bodyParser from 'body-parser';
+import expressGraphQL from 'express-graphql';
+import cors from 'cors';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import mongoose from 'mongoose';
+import graphQLSchema from './graphql/schema';
+import graphQLResolvers from './graphql/resolvers/handlerGenerators';
+require('dotenv').config();
 const app = express();
-// the __dirname is the current directory from where the script is running
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, '../build')));
-app.get('/ping', function (req, res) {
-  return res.send('pong');
-});
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
-app.listen(port, () => {
-  console.log(`app is listening to port ${port}`);
-});
+app.use(
+  cors(),
+  bodyParser.json()
+)
+app.use(
+  "/graphql",
+  expressGraphQL({
+    schema: graphQLSchema,
+    rootValue: graphQLResolvers,
+    graphiql: true
+  })
+);
+function main() {
+  const port = process.env.PORT || 3002;
+  const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds157839.mlab.com:57839/spiralworks_exam`;
+  mongoose.connect(uri, { useNewUrlParser: true })
+    .then(() => {
+      app.listen(port, () => console.log(`Server is listening on port: ${port}`));
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+main();

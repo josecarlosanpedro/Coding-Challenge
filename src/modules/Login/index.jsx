@@ -1,11 +1,3 @@
-import React from 'react'
+import View from './View';
 
-const Login = () => {
-  return (
-    <section className="login-section">
-      yow
-    </section>
-  )
-}
-
-export default Login
+export default View;
