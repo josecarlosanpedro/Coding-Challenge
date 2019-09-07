@@ -1,14 +1,54 @@
 import React, { useState } from 'react'
 import withRouter from 'react-router-dom/withRouter';
+import notification from 'antd/lib/notification';
+import axios from 'axios'
 
 const LoginForm = props => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
 
   const { history } = props
-  const handleLogin = e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    try {
+      const requestBody = {
+        query: `
+                query {
+                    login(email: "${email}", password: "${password}") {
+                        _id
+                        token
+                        email
+                    }
+                }
+            `
+      };
+      const { data } = await axios.post('http://localhost:3002/graphql', requestBody);
+
+      if (data.errors) {
+        notification.error({
+          message: 'login Failed',
+          description: data.errors[0].message
+        })
+        setLoading(false);
+      }
+      else {
+        notification.success({
+          message: 'login success'
+        })
+        setLoading(false);
+        const { _id, token } = await data.data.login;
+        localStorage.setItem('token', token);
+        localStorage.setItem('isLoggedIn', 'true');
+        history.push('home');
+      }
+    }
+    catch (e) {
+      setLoading(false);
+    }
   }
+
   console.log(props)
   const handleChangeEmail = event => {
     setEmail(event.target.value)
@@ -30,7 +70,7 @@ const LoginForm = props => {
           Password:
         </label>
         <input className="_spacer-sm" type="password" onChange={handleChangePassword} />
-        <button className="_spacer-sm login-button" type="submit">Submit</button>
+        <input className="_spacer-sm login-button" type="submit" value={loading ? "Logging in..." : "Login"} />
         <button className="_spacer-sm register-button" onClick={handleRegister}>Register</button>
       </form>
     </section>

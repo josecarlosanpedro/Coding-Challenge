@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import withRouter from 'react-router-dom/withRouter';
+import notification from 'antd/lib/notification';
+import axios from 'axios'
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button'
@@ -8,15 +10,55 @@ import Col from 'antd/lib/col';
 
 
 const RegisterForm = props => {
-  const { history, form, services } = props
-  const [confirmDirty, setConfirmDirty] = useState(false);
+  const { history, form } = props
+  const [loading, setLoading] = useState(false);
 
   const { getFieldDecorator } = form;
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    form.validateFieldsAndScroll((err, values) => {
+    form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        services.submitRegistrationEpic(values)
+        setLoading(true);
+        const { email, password, confirm, firstName, lastName } = values
+        try {
+          const requestBody = {
+            query: `
+                mutation {
+                    createUser(userInput: {
+                        email: "${email}"
+                        password: "${password}"
+                        confirm: "${confirm}"
+                        firstName: "${firstName}"
+                        lastName: "${lastName}"
+                    }) {
+                        _id
+                        token
+                        email
+                    }
+                }
+            `
+          };
+          const { data } = await axios.post('http://localhost:3002/graphql', requestBody);
+
+          if (data.errors) {
+            notification.error({
+              message: 'Registration Failed',
+              description: data.errors[0].message
+            })
+            setLoading(false);
+          }
+          else {
+            notification.success({
+              message: 'Registration Success',
+              description: "You can now login to the system"
+            })
+            form.resetFields()
+            setLoading(false);
+          }
+        }
+        catch (e) {
+          setLoading(false);
+        }
       }
     });
   };
@@ -31,7 +73,7 @@ const RegisterForm = props => {
 
   const validateToNextPassword = (rule, value, callback) => {
     const { form } = props;
-    if (value && confirmDirty) {
+    if (value) {
       form.validateFields(['confirm'], { force: true });
     }
     callback();
@@ -91,7 +133,7 @@ const RegisterForm = props => {
             </span>
               }
             >
-              {getFieldDecorator('firstname', {
+              {getFieldDecorator('firstName', {
                 rules: [{ required: true, message: 'Please input your firstname!', whitespace: true }],
               })(<Input />)}
             </Form.Item>
@@ -102,7 +144,7 @@ const RegisterForm = props => {
             </span>
               }
             >
-              {getFieldDecorator('lastname', {
+              {getFieldDecorator('lastName', {
                 rules: [{ required: true, message: 'Please input your lastname!', whitespace: true }],
               })(<Input />)}
             </Form.Item>

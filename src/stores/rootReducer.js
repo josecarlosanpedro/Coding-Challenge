@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import Registration from './modules/registration/registration.reducer';
+import Home from './modules/home/home.reducer';
 
 const rootReducers = combineReducers({
-  Registration
+  Home
 });
 
 export default rootReducers;

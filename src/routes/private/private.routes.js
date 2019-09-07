@@ -7,7 +7,7 @@ const HomeModule = lazy(() =>
 const privateRoutes = [
   {
     id: 'homeModule',
-    path: '/Home',
+    path: '/home',
     component: HomeModule,
     exact: true,
   },

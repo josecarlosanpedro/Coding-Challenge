@@ -8,11 +8,6 @@ const Register = props => {
   console.log(props, 'props *** ')
   const { services } = props
 
-  useEffect(() => {
-    return services.submitRegistrationCancel()
-  });
-
-
   return (
     <section className="register-section">
       <RegisterForm services={services} />

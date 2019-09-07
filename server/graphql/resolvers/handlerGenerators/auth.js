@@ -50,10 +50,12 @@ export async function login(args) {
   }
 }
 
-export async function verifyToken(args) {
+export async function getUserDetails(args) {
   try {
-    const decoded = jwt.verify(args.token, "mysecret");
-    const user = await User.findOne({ _id: decoded.id })
+    const {
+      _id,
+    } = args
+    const user = await User.findOne({ _id: _id })
     return { ...user._doc, password: null };
   }
   catch (err) {

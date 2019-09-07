@@ -1,13 +1,27 @@
-import React, { Component } from "react";
 
-class Home extends Component {
-  render() {
-    return (
-      <span>
-          this is home
-      </span>
-    );
-  }
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getUserDetailsEpics } from '../../stores/modules/home/home.actions'
+import View from './View';
+
+function mapStateToProps(state) {
+  return {
+    user: state.Home.user
+  };
 }
 
-export default Home;
+function mapDispatchToProps(dispatch) {
+  return {
+    services: bindActionCreators(
+      {
+        getUserDetailsEpics
+      },
+      dispatch,
+    ),
+    dispatch,
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(View);

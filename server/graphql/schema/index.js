@@ -16,7 +16,7 @@ input UserInput {
 }
 type RootQuery {
   login(email: String!, password: String!): User
-  verifyToken(token: String!): User
+  getUserDetails(_id: String!): User
 }
 type RootMutation {
   createUser(userInput: UserInput): User

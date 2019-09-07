@@ -1,17 +1,26 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/MainLayout";
 import Routes from "../routes";
 import '../css/index.scss'
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Layout>
-          <Routes isLoggedIn={true} />
-        </Layout>
-      </div>
-    );
-  }
+
+
+const App = () => {
+
+  const [login, setLogin] = useState('');
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    setLogin(isLoggedIn)
+  }, []);
+
+  return (
+    <div>
+      <Layout>
+        <Routes isLoggedIn={login} />
+      </Layout>
+    </div>
+  );
 }
+
 
 export default App;

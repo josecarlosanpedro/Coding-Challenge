@@ -1,9 +1,9 @@
 import { combineEpics } from 'redux-observable';
-import * as Registration from './modules/registration/registration.epics';
+import * as Home from './modules/home/home.epics';
 import 'rxjs'
 
 const rootEpic = combineEpics(
-  Registration.submitRegistrationEpic,
+  Home.getUserDetailsEpic
 );
 
 export default rootEpic;
