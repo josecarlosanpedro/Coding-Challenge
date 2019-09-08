@@ -14,6 +14,9 @@ const RegisterForm = props => {
   const [loading, setLoading] = useState(false);
 
   const { getFieldDecorator } = form;
+  const handleLogin = () => {
+    history.push('login')
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     form.validateFieldsAndScroll(async (err, values) => {
@@ -85,6 +88,8 @@ const RegisterForm = props => {
       <Row>
         <Col sm={6} md={6} xl={8} />
         <Col sm={12} md={10} xl={8}>
+
+          <h1>Registration</h1>
           <Form onSubmit={handleSubmit}>
             <Form.Item label="E-mail">
               {getFieldDecorator('email', {
@@ -151,9 +156,13 @@ const RegisterForm = props => {
             <Form.Item >
               <Button type="primary" htmlType="submit">
                 Register
-          </Button>
+              </Button>
+              <Button type="primary" onClick={handleLogin} >
+                Login
+              </Button>
             </Form.Item>
           </Form>
+
         </Col>
         <Col sm={6} md={6} xl={8} />
       </Row>

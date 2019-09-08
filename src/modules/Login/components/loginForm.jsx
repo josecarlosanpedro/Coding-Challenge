@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/withRouter';
 import notification from 'antd/lib/notification';
 import axios from 'axios'
 
+const propTypes = {
+  history: PropTypes.object.isRequired,
+};
 const LoginForm = props => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,8 +44,8 @@ const LoginForm = props => {
         setLoading(false);
         const { _id, token } = await data.data.login;
         localStorage.setItem('token', token);
-        localStorage.setItem('isLoggedIn', 'true');
-        history.push('home');
+        localStorage.setItem('isLoggedIn', true);
+        window.location = 'home'
       }
     }
     catch (e) {
@@ -77,4 +81,5 @@ const LoginForm = props => {
   )
 }
 
+LoginForm.propTypes = propTypes;
 export default withRouter(LoginForm)

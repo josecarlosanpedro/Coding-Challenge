@@ -1,18 +1,14 @@
 import React, { Fragment, Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import Loading from '../Loading';
 import privateRoutesList from './private.routes';
-
-const propTypes = {
-  auth: PropTypes.shape({}).isRequired,
-};
+import NotFound from '../../components/Common/NotFound'
 
 const privateList = [
   ...privateRoutesList,
 ]
 
-const PrivateRoutes = () => (
+const PrivateRoutes = ({ isLoggedIn }) => (
   <Fragment>
     <Suspense fallback={<Loading />}>
       <Switch>
@@ -25,11 +21,13 @@ const PrivateRoutes = () => (
           />
         ))
         }
+        {isLoggedIn &&
+          <Route path="*" component={() => <NotFound />} />
+        }
       </Switch>
     </Suspense>
   </Fragment>
 )
 
-PrivateRoutes.propTypes = propTypes;
 
 export default PrivateRoutes;

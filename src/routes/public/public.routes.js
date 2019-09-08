@@ -9,6 +9,12 @@ const RegistrationModule = lazy(() =>
 
 const publicRoutes = [
   {
+    id: '/',
+    path: '/',
+    component: LoginModule,
+    exact: true,
+  },
+  {
     id: 'loginModule',
     path: '/Login',
     component: LoginModule,

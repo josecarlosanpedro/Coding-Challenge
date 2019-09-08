@@ -1,3 +1,11 @@
+@import './utils/variables';
+@import './utils/helpers/spacer';
+@import './utils/helpers/text';
 @import './modules/index';
 @import './components/header';
-@import './helpers/index';
+@import './components/footer';
+
+.main-content {
+  min-height: calc(89vh - 15px);
+  padding: 20px;
+}
