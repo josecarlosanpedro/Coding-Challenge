@@ -10,7 +10,7 @@ export async function createUser(args) {
       confirm,
       firstName,
       lastName
-    } = args.userInput; //retrieve values from arguments
+    } = args.userInput;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new Error('User already exists!');
@@ -26,9 +26,7 @@ export async function createUser(args) {
       lastName
     }, (err) => { if (err) throw err });
     user.save();
-    // if user is registered without errors
-    // create a token
-    const token = jwt.sign({ id: user._id }, "mysecret");
+    const token = jwt.sign({ id: user._id }, 'mysecret');
 
     return { token, password: null, ...user._doc }
   }
@@ -42,7 +40,7 @@ export async function login(args) {
     if (!user) throw new Error('Email does not exist');
     const passwordIsValid = await bcrypt.compareSync(args.password, user.password);
     if (!passwordIsValid) throw new Error('Password incorrect');
-    const token = jwt.sign({ id: user._id }, "mysecret");
+    const token = jwt.sign({ id: user._id }, 'mysecret');
     return { token, password: null, ...user._doc }
   }
   catch (err) {

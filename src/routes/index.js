@@ -6,13 +6,19 @@ import PrivateRoutes from './private';
 import Loading from './Loading'
 
 const propTypes = {
-  isLoggedIn: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const Routes = ({ isLoggedIn }) => {
   return (
     <Fragment>
-      <PublicRoutes isLoggedIn={isLoggedIn} />
+      {!isLoggedIn &&
+        (
+          <Suspense fallback={<Loading />}>
+            <PublicRoutes isLoggedIn={isLoggedIn} />
+          </Suspense>
+        )
+      }
       {isLoggedIn
         && (
           <Suspense fallback={<Loading />}>

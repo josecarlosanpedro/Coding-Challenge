@@ -8,7 +8,7 @@ const privateList = [
   ...privateRoutesList,
 ]
 
-const PrivateRoutes = ({ isLoggedIn }) => (
+const PrivateRoutes = isLoggedIn => (
   <Fragment>
     <Suspense fallback={<Loading />}>
       <Switch>

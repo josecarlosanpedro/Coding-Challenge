@@ -1,17 +1,12 @@
 import React, { Fragment, Suspense, lazy } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import Loading from '../Loading'
 import publicRoutesList from './public.routes'
 import NotFound from '../../components/Common/NotFound'
 
 const publicRoutes = [...publicRoutesList];
 
-const propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-};
-
-const PublicRoutes = ({ isLoggedIn }) => {
+const PublicRoutes = isLoggedIn => {
   return (
     <Fragment>
       <Suspense fallback={<Loading />}>
@@ -34,6 +29,5 @@ const PublicRoutes = ({ isLoggedIn }) => {
   )
 }
 
-PublicRoutes.propTypes = propTypes;
 
 export default PublicRoutes;

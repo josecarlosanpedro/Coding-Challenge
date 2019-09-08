@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 const propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
 };
 class Layout extends Component {
   render() {
