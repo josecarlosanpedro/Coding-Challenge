@@ -13,6 +13,3 @@ Unit Test
   npm run test / yarn test
 ```
 
-#### Having an issue or problem, and suggestion?
-
-Please, [Open an issue](https://github.com/juztinlazaro/react-starter-kit-ts/issues/new).
